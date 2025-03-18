@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from rest_framework import generics, status, filters, viewsets
+from rest_framework import generics, status, filters, permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Customer
@@ -18,6 +18,7 @@ class CustomerListCreateAPIView(generics.ListCreateAPIView):
     queryset = Customer.objects.select_related().defer('modified_at').order_by('-created_at')
     serializer_class = CustomerSerializer
     pagination_class = CustomerPagination
+    permission_classes = [permissions.IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['first_name', 'last_name', 'email', 'phone_number']
     ordering_fields = ['first_name', 'last_name', 'age', 'created_at']
@@ -35,10 +36,12 @@ class CustomerListCreateAPIView(generics.ListCreateAPIView):
 class CustomerRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 # Bulk update: Update multiple records with the given data
 class CustomerBulkUpdateAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def put(self, request, *args, **kwargs):
         update_data = request.data  # Expecting a list of objects with 'id' and fields to update
         
@@ -64,6 +67,7 @@ class CustomerBulkUpdateAPIView(APIView):
 
 # Bulk delete: Delete multiple or all records
 class CustomerBulkDeleteAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def delete(self, request, *args, **kwargs):
         customer_ids = request.data.get('ids', None)  # Expecting a list of IDs
 
