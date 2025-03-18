@@ -28,7 +28,7 @@ Customer-management-backend/
 ├── venv
 
 **Prerequisites**
-  Python 3.8 or later
+  Python 3.12 or later
   pip
   virtualenv (optional, Python includes venv in the standard library)
   Docker (for containerized deployment)
