@@ -15,7 +15,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'email': {'required': False},  # Allows email to be optional
             'phone_number': {'required': True},
-            'dob': {'required': True},
+            'dob': {'required': False},
         }
 
     def get_age(self, obj):
