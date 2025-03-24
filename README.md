@@ -49,6 +49,8 @@ macOS/Linux:
   python3 -m venv env
   source env/bin/activate
 
+  source venv/bin/activate
+
 **3. Install Dependencies**
 **Install Django and other dependencies:**
   pip install -r requirements.txt
